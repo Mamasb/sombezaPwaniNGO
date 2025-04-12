@@ -1,6 +1,6 @@
-# SombEzapwaningo
+# SombEzapwaniNGO
 
-SombEzapwaningo is a modern social platform designed to showcase user posts, with a clean UI layout consisting of a left sidebar (navigation), a main feed, and a right sidebar (additional content). Built with React and styled with custom CSS, the app uses modern animations (Framer Motion) and intersection observers for interactive post loading.
+SombEzapwaninNGO is a modern social platform designed to showcase user posts, with a clean UI layout consisting of a left sidebar (navigation), a main feed, and a right sidebar (additional content). Built with React and styled with custom CSS, the app uses modern animations (Framer Motion) and intersection observers for interactive post loading.
 
 ## 🌟 Features
 
