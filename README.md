@@ -10,3 +10,32 @@ SombEzapwaninNGO is a modern social platform designed to showcase user posts, wi
 - Modular React components
 - Built-in CSS styling
 - Ready for expansion with backend APIs
+## 🛠 Tech Stack
+
+- [React](https://reactjs.org/)
+- [Framer Motion](https://www.framer.com/motion/)
+- [Day.js](https://day.js.org/)
+- [TailwindCSS](https://tailwindcss.com/)
+- [Vite](https://vitejs.dev/)
+
+---
+
+## 🧾 Installation
+
+1. **Clone the repository:**
+
+   ```bash
+   git clone https://github.com/your-username/sombezapwaningo.git
+   cd sombezapwaningo
+Install dependencies:
+
+bash
+Copy
+Edit
+npm install
+Run the development server:
+
+bash
+Copy
+Edit
+npm run dev
