@@ -1,35 +1,18 @@
-import { AppBar, Toolbar, Typography, Button } from "@mui/material";
-import { Link, useNavigate } from "react-router-dom";
+import React from 'react';
+import { Link } from 'react-router-dom';
 
-function Navbar() {
-  const navigate = useNavigate();
-  const user = JSON.parse(localStorage.getItem("user"));
-
-  const handleLogout = () => {
-    localStorage.removeItem("user");
-    navigate("/login");
-  };
-
+const NavBar = () => {
   return (
-    <AppBar position="static">
-      <Toolbar>
-        <Typography variant="h6" style={{ flexGrow: 1 }}>
-          Student Portal
-        </Typography>
-
-        {/* Show Login button only if user is not logged in */}
-        {!user ? (
-          <Button color="inherit" component={Link} to="/login">
-            Login
-          </Button>
-        ) : (
-          <Button color="inherit" onClick={handleLogout}>
-            Logout
-          </Button>
-        )}
-      </Toolbar>
-    </AppBar>
+    <nav className="bg-gray-800 text-white p-4">
+      <div className="max-w-7xl mx-auto flex justify-between">
+        <Link to="/" className="text-xl font-bold">MyPortal</Link>
+        <div>
+          <Link to="/" className="mx-4">Home</Link>
+          <Link to="/admin" className="mx-4">Admin Feed</Link>
+        </div>
+      </div>
+    </nav>
   );
-}
+};
 
-export default Navbar;
+export default NavBar;
