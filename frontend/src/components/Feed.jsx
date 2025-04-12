@@ -4,6 +4,8 @@ import { useInView } from 'react-intersection-observer';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import '../styles/styles.css';
+import AnimatedMenuItem from '../components/AnimatedMenuItem';
+
 
 dayjs.extend(relativeTime);
 
@@ -103,13 +105,13 @@ const Feed = ({ posts }) => {
         <div className="sidebar-content">
           <h2 className="sidebar-title">Menu</h2>
           <ul className="sidebar-links">
-            <li>Home</li>
-            <li>
-              <a href="/explore">Explore</a>
-            </li>
-            <li>Notifications</li>
-            <li>Messages</li>
-          </ul>
+  <AnimatedMenuItem label="Explore" link="/explore" animationKey="explore" />
+  <AnimatedMenuItem label="Learning & Impact" animationKey="learn" />
+  <AnimatedMenuItem label="Donations and Partnerships" animationKey="donate" />
+  <AnimatedMenuItem label="Messages" animationKey="messages" />
+  <AnimatedMenuItem label="Careers And Opportunities" animationKey="careers" />
+</ul>
+
         </div>
       </aside>
 

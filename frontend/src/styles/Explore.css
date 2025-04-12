@@ -8,6 +8,7 @@
   background-color: #f9f9f9;
   height: 100vh; /* Full viewport height */
   position: relative;
+  z-index: 0;
 }
 
 /* Animation for the image that covers the page */
@@ -59,7 +60,7 @@
   transition: all 0.5s ease-in-out;
 }
 
-/* Styles for dynamic patterns (if you want visual effects as well) */
+/* Optional dynamic pattern effect */
 .explore-pattern {
   position: absolute;
   bottom: 10%;
