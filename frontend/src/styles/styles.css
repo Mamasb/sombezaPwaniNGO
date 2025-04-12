@@ -1,132 +1,89 @@
-/* src/styles/styles.css */
-
-/* Container for the entire feed layout */
-.feed-container {
-  display: grid;
-  grid-template-columns: 1fr 3fr 1fr; /* Left Sidebar, Main Feed, Right Sidebar */
-  gap: 24px;
-  padding: 20px;
-  background-color: #f7fafc;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-/* Left Sidebar */
-.sidebar-left {
-  background-color: #ffffff;
-  padding: 16px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+/* Ensures images always take space and show */
+.post-card img {
+  display: block;
+  width: 100%;
+  max-height: 400px;
+  height: auto;
   border-radius: 8px;
-  position: sticky;
-  top: 20px;
+  margin-top: 20px;
+  object-fit: cover;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background-color: #ddd; /* fallback color while loading */
 }
 
-.sidebar-left .sidebar-content {
+/* Optional: placeholder effect */
+.post-card img::before {
+  content: "";
+  display: block;
+  padding-top: 56.25%; /* 16:9 aspect ratio */
+  background: #e2e8f0;
+}
+
+/* Optional fallback text for broken images */
+img:before {
+  content: "Image not available";
+  color: #999;
+  display: block;
+  text-align: center;
+  font-style: italic;
+}
+
+/* Feed Layout */
+.feed-container {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px auto;
+  max-width: 1200px;
+}
+
+/* Sidebar styles */
+.sidebar-left,
+.sidebar-right {
+  width: 20%;
+  background-color: #f9f9f9;
+  padding: 20px;
+}
+
+.sidebar-content {
   margin-bottom: 20px;
 }
 
-.sidebar-left .sidebar-title {
-  font-size: 1.25rem;
+.sidebar-title {
+  font-size: 18px;
   font-weight: bold;
-  color: #2d3748;
   margin-bottom: 10px;
 }
 
-.sidebar-left .sidebar-links {
-  list-style: none;
+.sidebar-links {
+  list-style-type: none;
   padding: 0;
 }
 
-.sidebar-left .sidebar-links li {
-  margin-bottom: 8px;
-  cursor: pointer;
-  color: #4a5568;
-  font-size: 0.875rem;
+.sidebar-links li {
+  margin: 10px 0;
 }
 
-.sidebar-left .sidebar-links li:hover {
-  text-decoration: underline;
+.sidebar-content p {
+  font-size: 14px;
+  color: #666;
 }
 
-/* Main Feed */
+/* Feed and Posts */
 .feed-main {
-  background-color: #ffffff;
-  padding: 24px;
-  border-radius: 8px;
+  width: 55%;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.feed-header {
-  border-bottom: 2px solid #edf2f7;
-  margin-bottom: 20px;
-  padding-bottom: 10px;
-}
-
-.feed-title {
-  text-align: center;
-  font-size: 2rem;
-  font-weight: bold;
-  color: #2d3748;
-}
-
-.posts-container {
-  margin-top: 20px;
-}
-
-.no-posts {
-  text-align: center;
-  color: #6b7280;
-  font-size: 1rem;
-}
-
-/* Right Sidebar */
-.sidebar-right {
-  background-color: #ffffff;
-  padding: 16px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
-  position: sticky;
-  top: 20px;
-}
-
-.sidebar-right .sidebar-title {
-  font-size: 1.25rem;
-  font-weight: bold;
-  margin-bottom: 10px;
-}
-
-.sidebar-right .sidebar-content {
-  margin-bottom: 20px;
-}
-
-.sidebar-right .btn-donate {
-  width: 100%;
-  background-color: #3182ce;
-  color: white;
-  font-size: 0.875rem;
-  padding: 12px 16px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-}
-
-.sidebar-right .btn-donate:hover {
-  background-color: #2b6cb0;
-}
-
-/* Post Card Styling */
+/* Post Card */
 .post-card {
-  background-color: #ffffff;
-  border: 1px solid #e2e8f0;
-  border-radius: 8px;
-  padding: 16px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  transition: all 0.2s ease-in-out;
+  background-color: #f9f9f9;
+  padding: 20px;
   margin-bottom: 20px;
-}
-
-.post-card:hover {
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .post-card .flex {
@@ -135,20 +92,140 @@
 }
 
 .post-card .flex-shrink-0 {
-  margin-right: 12px;
+  flex-shrink: 0;
+}
+
+.post-card .mr-3 {
+  margin-right: 15px;
+}
+
+.post-card .w-12 {
+  width: 48px;
+  height: 48px;
+}
+
+.post-card .h-12 {
+  height: 48px;
+}
+
+.post-card .rounded-full {
+  border-radius: 50%;
+}
+
+.post-card .bg-blue-500 {
+  background-color: #4299e1;
+}
+
+.post-card .text-white {
+  color: white;
+}
+
+.post-card .font-bold {
+  font-weight: bold;
 }
 
 .post-card .flex-grow {
   flex-grow: 1;
 }
 
-.post-card h4 {
-  font-weight: bold;
+.post-card .font-semibold {
+  font-weight: 600;
+}
+
+.post-card .text-gray-800 {
   color: #2d3748;
 }
 
-.post-card p {
-  color: #4a5568;
-  font-size: 0.875rem;
-  margin-top: 8px;
+.post-card .text-sm {
+  font-size: 14px;
+}
+
+.post-card .mt-1 {
+  margin-top: 10px;
+}
+
+.post-card .text-xs {
+  font-size: 12px;
+}
+
+.post-card .text-gray-500 {
+  color: #a0aec0;
+}
+
+/* Comment Section */
+.comment-section {
+  margin-top: 20px;
+}
+
+.comment-section textarea {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  resize: vertical;
+  min-height: 100px;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+.comment-section button {
+  margin-top: 10px;
+  background-color: #4299e1;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.comment-section button:hover {
+  background-color: #3182ce;
+}
+
+/* New Comment Box */
+.new-comment-box {
+  background-color: #f1f5f9;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.new-comment-box textarea {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  resize: vertical;
+  min-height: 80px;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+.new-comment-box button {
+  margin-top: 10px;
+  background-color: #48bb78;
+  color: white;
+  padding: 8px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.new-comment-box button:hover {
+  background-color: #38a169;
+}
+
+/* Title and Feed Header */
+.feed-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.no-posts {
+  font-size: 16px;
+  color: #999;
+  text-align: center;
+  margin-top: 50px;
 }

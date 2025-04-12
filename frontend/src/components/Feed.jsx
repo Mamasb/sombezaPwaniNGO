@@ -1,22 +1,14 @@
-// src/components/Feed.jsx
-
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
+import '../styles/styles.css';
+
 dayjs.extend(relativeTime);
-import '../styles/styles.css';  // Assuming styles.css is one level up in a 'styles' directory
 
-
-
-const PostCard = ({ post, index }) => {
-  const { ref, inView } = useInView({
-    triggerOnce: true,
-    threshold: 0.3
-  });
-
-  // Alternate the entry direction a bit for a dynamic feel
+const PostCard = ({ post, index, onCommentChange, onCommentSubmit }) => {
+  const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.3 });
   const direction = index % 2 === 0 ? -150 : 150;
 
   return (
@@ -30,7 +22,7 @@ const PostCard = ({ post, index }) => {
       <div className="flex">
         <div className="flex-shrink-0 mr-3">
           <div className="w-12 h-12 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold">
-            A {/* You can add a profile image here */}
+            A
           </div>
         </div>
         <div className="flex-grow">
@@ -43,41 +35,122 @@ const PostCard = ({ post, index }) => {
           <p className="text-gray-800 text-sm mt-1">{post.content}</p>
         </div>
       </div>
+
+      {post.image && (
+        <div className="mt-3">
+          <img
+            src={post.image}
+            alt="Post Content"
+            className="post-image"
+            onError={(e) => {
+              e.target.onerror = null;
+              e.target.src = "/images/default.jpg";
+            }}
+          />
+        </div>
+      )}
+
+      {post.isCommenting && (
+        <div className="comment-section mt-3">
+          <textarea
+            placeholder="Write a comment..."
+            value={post.comment}
+            className="comment-textarea"
+            rows={3}
+            onChange={(e) => onCommentChange(post.id, e.target.value)}
+          />
+          <button
+            onClick={() => onCommentSubmit(post)}
+            className="comment-button"
+          >
+            Post
+          </button>
+        </div>
+      )}
     </motion.div>
   );
 };
 
 const Feed = ({ posts }) => {
+  const [comments, setComments] = useState({});
+  const [currentPost, setCurrentPost] = useState(null);
+  const [showCommentBox, setShowCommentBox] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY < 100) setShowCommentBox(true);
+      else setShowCommentBox(false);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const handleCommentChange = (postId, comment) => {
+    setComments({
+      ...comments,
+      [postId]: { ...comments[postId], comment },
+    });
+  };
+
+  const handleCommentSubmit = (post) => {
+    // Handle comment submission logic
+    console.log("Comment submitted for post: ", post.id);
+  };
+
   return (
     <div className="feed-container">
-      {/* Left Sidebar */}
       <aside className="sidebar-left">
         <div className="sidebar-content">
           <h2 className="sidebar-title">Menu</h2>
           <ul className="sidebar-links">
             <li>Home</li>
-            <li>Explore</li>
+            <li>
+              <a href="/explore">Explore</a>
+            </li>
             <li>Notifications</li>
             <li>Messages</li>
           </ul>
         </div>
       </aside>
 
-      {/* Main Feed */}
       <main className="feed-main">
         <div className="feed-header">
-          <h1 className="feed-title">Home Feed</h1>
+          {showCommentBox && !currentPost ? (
+            <div className="new-comment-box mb-4">
+              <textarea
+                placeholder="Write your comment here..."
+                className="comment-textarea"
+                rows={3}
+              />
+              <button
+                onClick={() => setCurrentPost(posts[0])}
+                className="comment-button"
+              >
+                Post a Comment
+              </button>
+            </div>
+          ) : (
+            <h1 className="feed-title">SombezaPwani</h1>
+          )}
         </div>
+
         <div className="posts-container">
           {posts.length === 0 ? (
             <p className="no-posts">No posts yet.</p>
           ) : (
-            posts.map((post, idx) => <PostCard key={idx} post={post} index={idx} />)
+            posts.map((post, idx) => (
+              <PostCard
+                key={idx}
+                post={{ ...post, comment: comments[post.id]?.comment || '' }}
+                index={idx}
+                onCommentChange={handleCommentChange}
+                onCommentSubmit={handleCommentSubmit}
+              />
+            ))
           )}
         </div>
       </main>
 
-      {/* Right Sidebar */}
       <aside className="sidebar-right">
         <div className="sidebar-content">
           <h3 className="sidebar-title">Support Our Platform</h3>
