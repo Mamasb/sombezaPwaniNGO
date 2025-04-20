@@ -18,7 +18,8 @@
   left: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  background-size: 50% 100%; /* Adjusting to display two images side by side */
+  background-position: left center, right center;
   opacity: 0;
   animation: imageTransition 20s infinite;
 }
@@ -47,6 +48,15 @@
   }
 }
 
+/* Dynamic delay for images */
+.explore-image:nth-child(odd) {
+  animation-delay: 10s;
+}
+
+.explore-image:nth-child(even) {
+  animation-delay: 15s;
+}
+
 /* Container for the content under each image */
 .explore-content {
   position: absolute;
@@ -58,6 +68,27 @@
   font-weight: bold;
   text-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
   transition: all 0.5s ease-in-out;
+  opacity: 0;
+  animation: fadeInOut 20s infinite;
+}
+
+/* Fade in and out animation for text */
+@keyframes fadeInOut {
+  0% {
+    opacity: 1;
+  }
+  25% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0;
+  }
+  75% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
 }
 
 /* Optional dynamic pattern effect */
@@ -70,7 +101,7 @@
   background: rgba(255, 255, 255, 0.5);
   border-radius: 15px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-  animation: patternAnimation 5s ease-out infinite;
+  animation: patternAnimation 10s ease-in-out infinite;
 }
 
 /* Keyframes for a dynamic pattern animation */

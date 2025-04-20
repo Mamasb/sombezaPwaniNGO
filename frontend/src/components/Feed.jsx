@@ -6,12 +6,13 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 import '../styles/styles.css';
 import AnimatedMenuItem from '../components/AnimatedMenuItem';
 
-
 dayjs.extend(relativeTime);
 
 const PostCard = ({ post, index, onCommentChange, onCommentSubmit }) => {
   const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.3 });
   const direction = index % 2 === 0 ? -150 : 150;
+
+  const media = post.media || (post.image ? { type: 'image', src: post.image } : null);
 
   return (
     <motion.div
@@ -21,11 +22,17 @@ const PostCard = ({ post, index, onCommentChange, onCommentSubmit }) => {
       transition={{ type: 'spring', stiffness: 120, damping: 18 }}
       className="post-card"
     >
-      <div className="flex">
-        <div className="flex-shrink-0 mr-3">
-          <div className="w-12 h-12 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold">
-            A
-          </div>
+      <div className="flex items-start">
+        <div className="w-12 h-12 mr-3">
+          <img
+            src="/images/admin-avatar.png"
+            alt="Admin Avatar"
+            className="rounded-full object-cover w-full h-full"
+            onError={(e) => {
+              e.target.onerror = null;
+              e.target.src = "/images/default-avatar.png";
+            }}
+          />
         </div>
         <div className="flex-grow">
           <div className="flex items-center justify-between">
@@ -35,40 +42,47 @@ const PostCard = ({ post, index, onCommentChange, onCommentSubmit }) => {
             </span>
           </div>
           <p className="text-gray-800 text-sm mt-1">{post.content}</p>
+
+          {media && (
+            <div className="post-media mt-3">
+              {media.type === 'image' ? (
+                <img
+                  src={media.src}
+                  alt="Post Content"
+                  className="media-item rounded-md"
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src = "/images/default.jpg";
+                  }}
+                />
+              ) : media.type === 'video' ? (
+                <video controls className="media-item rounded-md">
+                  <source src={media.src} type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
+              ) : null}
+            </div>
+          )}
+
+          {post.isCommenting && (
+            <div className="comment-section mt-3">
+              <textarea
+                placeholder="Write a comment..."
+                value={post.comment}
+                className="comment-textarea"
+                rows={3}
+                onChange={(e) => onCommentChange(post.id, e.target.value)}
+              />
+              <button
+                onClick={() => onCommentSubmit(post)}
+                className="comment-button"
+              >
+                Post
+              </button>
+            </div>
+          )}
         </div>
       </div>
-
-      {post.image && (
-        <div className="mt-3">
-          <img
-            src={post.image}
-            alt="Post Content"
-            className="post-image"
-            onError={(e) => {
-              e.target.onerror = null;
-              e.target.src = "/images/default.jpg";
-            }}
-          />
-        </div>
-      )}
-
-      {post.isCommenting && (
-        <div className="comment-section mt-3">
-          <textarea
-            placeholder="Write a comment..."
-            value={post.comment}
-            className="comment-textarea"
-            rows={3}
-            onChange={(e) => onCommentChange(post.id, e.target.value)}
-          />
-          <button
-            onClick={() => onCommentSubmit(post)}
-            className="comment-button"
-          >
-            Post
-          </button>
-        </div>
-      )}
     </motion.div>
   );
 };
@@ -80,8 +94,7 @@ const Feed = ({ posts }) => {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY < 100) setShowCommentBox(true);
-      else setShowCommentBox(false);
+      setShowCommentBox(window.scrollY < 100);
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
@@ -95,8 +108,8 @@ const Feed = ({ posts }) => {
   };
 
   const handleCommentSubmit = (post) => {
-    // Handle comment submission logic
     console.log("Comment submitted for post: ", post.id);
+    // Add real submission logic here
   };
 
   return (
@@ -105,13 +118,12 @@ const Feed = ({ posts }) => {
         <div className="sidebar-content">
           <h2 className="sidebar-title">Menu</h2>
           <ul className="sidebar-links">
-  <AnimatedMenuItem label="Explore" link="/explore" animationKey="explore" />
-  <AnimatedMenuItem label="Learning & Impact" animationKey="learn" />
-  <AnimatedMenuItem label="Donations and Partnerships" animationKey="donate" />
-  <AnimatedMenuItem label="Messages" animationKey="messages" />
-  <AnimatedMenuItem label="Careers And Opportunities" animationKey="careers" />
-</ul>
-
+            <AnimatedMenuItem label="Explore" link="/explore" animationKey="explore" />
+            <AnimatedMenuItem label="Learning & Impact" animationKey="learn" />
+            <AnimatedMenuItem label="Donations and Partnerships" animationKey="donate" />
+            <AnimatedMenuItem label="Messages" animationKey="messages" />
+            <AnimatedMenuItem label="Careers And Opportunities" animationKey="careers" />
+          </ul>
         </div>
       </aside>
 
@@ -142,7 +154,7 @@ const Feed = ({ posts }) => {
           ) : (
             posts.map((post, idx) => (
               <PostCard
-                key={idx}
+                key={post.id || idx}
                 post={{ ...post, comment: comments[post.id]?.comment || '' }}
                 index={idx}
                 onCommentChange={handleCommentChange}
