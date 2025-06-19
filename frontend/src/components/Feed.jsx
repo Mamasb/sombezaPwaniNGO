@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import dayjs from 'dayjs';
@@ -9,8 +9,11 @@ import AnimatedMenuItem from '../components/AnimatedMenuItem';
 dayjs.extend(relativeTime);
 
 const PostCard = ({ post, index }) => {
-  const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.2 });
-  const direction = index % 2 === 0 ? -50 : 50;
+  const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.3 });
+  const direction = index % 2 === 0 ? -100 : 100;
+
+  const [liked, setLiked] = useState(false);
+  const [hoveringAvatar, setHoveringAvatar] = useState(false);
 
   const media = (() => {
     if (post.media) {
@@ -31,13 +34,18 @@ const PostCard = ({ post, index }) => {
   return (
     <motion.div
       ref={ref}
+      layout
       initial={{ opacity: 0, x: direction }}
       animate={inView ? { opacity: 1, x: 0 } : {}}
-      transition={{ type: 'tween', duration: 0.5 }}
+      transition={{ type: 'spring', stiffness: 120, damping: 20 }}
       className="post-card"
     >
-      <div className="post-header">
-        <div className="avatar-holder">
+      <div className="flex items-start">
+        <div
+          className="avatar-holder"
+          onMouseEnter={() => setHoveringAvatar(true)}
+          onMouseLeave={() => setHoveringAvatar(false)}
+        >
           <img
             src="/images/admin-avatar.png"
             alt="Admin Avatar"
@@ -47,29 +55,54 @@ const PostCard = ({ post, index }) => {
               e.target.src = "/images/default-avatar.png";
             }}
           />
+          {hoveringAvatar && (
+            <div className="hovercard">
+              <h4>Admin</h4>
+              <p>Content Manager • Joined 2024</p>
+            </div>
+          )}
         </div>
-        <div className="post-meta">
-          <div className="author">Admin</div>
-          <div className="timestamp">
-            {post.timestamp ? dayjs(post.timestamp).fromNow() : 'Just now'}
+
+        <div className="flex-grow">
+          <div className="flex items-center justify-between">
+            <h4 className="font-semibold text-sm text-gray-800">Admin</h4>
+            <span className="text-xs text-gray-500">
+              {post.timestamp ? dayjs(post.timestamp).fromNow() : 'Just now'}
+            </span>
+          </div>
+
+          {post.content && (
+            <p className="text-gray-800 text-sm mt-1">{post.content}</p>
+          )}
+
+          {media && (
+            <div className="post-media mt-3">
+              {media.type === 'image' ? (
+                <img
+                  src={media.src}
+                  alt="Post Media"
+                  className="media-item rounded-md"
+                />
+              ) : media.type === 'video' ? (
+                <video controls className="media-item rounded-md" width="100%">
+                  <source src={media.src} type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
+              ) : null}
+            </div>
+          )}
+
+          <div className="post-actions mt-3">
+            <button
+              className={`like-button ${liked ? 'liked' : ''}`}
+              onClick={() => setLiked(!liked)}
+            >
+              ❤️ {liked ? 'Liked' : 'Like'}
+            </button>
+            <button className="share-button">🔗 Share</button>
           </div>
         </div>
       </div>
-
-      {post.content && <p className="post-text">{post.content}</p>}
-
-      {media && (
-        <div className="post-media">
-          {media.type === 'image' ? (
-            <img src={media.src} alt="Post Media" className="media-item" />
-          ) : media.type === 'video' ? (
-            <video controls className="media-item">
-              <source src={media.src} type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
-          ) : null}
-        </div>
-      )}
     </motion.div>
   );
 };
@@ -91,13 +124,20 @@ const Feed = ({ posts }) => {
       </aside>
 
       <main className="feed-main">
-        <h1 className="feed-title">SombezaPwani</h1>
+        <div className="feed-header">
+          <h1 className="feed-title">SombezaPwani</h1>
+        </div>
+
         <div className="posts-container">
           {posts.length === 0 ? (
             <p className="no-posts">No posts yet.</p>
           ) : (
             posts.map((post, idx) => (
-              <PostCard key={post.id || idx} post={post} index={idx} />
+              <PostCard
+                key={post.id || post.timestamp || `post-${idx}`}
+                post={post}
+                index={idx}
+              />
             ))
           )}
         </div>

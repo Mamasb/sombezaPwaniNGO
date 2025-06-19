@@ -1,145 +1,276 @@
-/* Reset */
+/* === Global Reset === */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
+
 html, body {
-  font-family: 'Segoe UI', Tahoma, sans-serif;
-  background-color: #f0f2f5;
+  width: 100%;
+  min-height: 100vh;
   overflow-x: hidden;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f0f2f5;
 }
 
-/* Layout */
+/* === Feed Layout === */
 .feed-container {
   display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
   gap: 20px;
   max-width: 1200px;
-  margin: 20px auto;
+  margin: 30px auto;
   padding: 0 16px;
+  width: 100%;
 }
 
+/* === Sidebar Styling (Twitter-like) === */
 .sidebar-left,
 .sidebar-right {
-  width: 20%;
-  min-width: 180px;
-  background: #fff;
-  border-radius: 10px;
-  padding: 16px;
-  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.05);
+  width: 260px;
+  flex-shrink: 0;
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.04), 0 2px 6px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  max-height: fit-content;
+  position: sticky;
+  top: 20px;
 }
 
+.sidebar-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #14171a;
+  margin-bottom: 8px;
+}
+
+.sidebar-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar-links li {
+  margin-bottom: 14px;
+}
+
+.sidebar-links a {
+  display: block;
+  text-decoration: none;
+  color: #1d9bf0;
+  font-weight: 500;
+  padding: 6px 10px;
+  border-radius: 8px;
+  transition: background 0.2s ease;
+}
+
+.sidebar-links a:hover {
+  background-color: rgba(29, 155, 240, 0.1);
+}
+
+.sidebar-content p {
+  font-size: 14px;
+  color: #555;
+  margin-top: 4px;
+  line-height: 1.4;
+}
+
+.btn-donate {
+  display: block;
+  width: 100%;
+  margin-top: 10px;
+  padding: 10px 0;
+  background-color: #1d9bf0;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  text-align: center;
+  transition: background-color 0.3s ease;
+}
+
+.btn-donate:hover {
+  background-color: #0d8ae3;
+}
+
+/* === Feed Main === */
 .feed-main {
   flex: 1;
-  background: #fff;
-  padding: 20px;
+  background: #ffffff;
   border-radius: 10px;
-  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.05);
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
 }
 
-/* Titles */
 .feed-title {
-  font-size: 22px;
+  font-size: 24px;
   font-weight: 700;
   margin-bottom: 20px;
 }
-.sidebar-title {
-  font-size: 18px;
-  font-weight: 600;
-  margin-bottom: 10px;
+
+.no-posts {
+  text-align: center;
+  color: #666;
+  margin-top: 40px;
+  font-size: 16px;
 }
 
-/* Post Card */
+/* === Post Card === */
 .post-card {
-  background: #fefefe;
+  background: #f9f9f9;
+  border-radius: 12px;
   padding: 16px;
   margin-bottom: 20px;
-  border-radius: 10px;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
-  transition: box-shadow 0.3s ease;
-}
-.post-card:hover {
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
 }
 
-/* Post Header */
-.post-header {
+/* === Flex Utility === */
+.flex {
   display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 10px;
+  align-items: flex-start;
 }
+
+.flex-grow {
+  flex: 1;
+}
+
+/* === Avatar + HoverCard === */
 .avatar-holder {
+  position: relative;
   width: 48px;
   height: 48px;
+  margin-right: 15px;
   border-radius: 50%;
   overflow: hidden;
   flex-shrink: 0;
-  background-color: #ccc;
+  background-color: #e2e8f0;
 }
+
 .avatar-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-}
-.post-meta .author {
-  font-weight: 600;
-  color: #1a202c;
-}
-.post-meta .timestamp {
-  font-size: 12px;
-  color: #718096;
+  border-radius: 50%;
+  display: block;
 }
 
-/* Post Body */
-.post-text {
-  font-size: 15px;
-  color: #2d3748;
-  margin-bottom: 12px;
+.hovercard {
+  position: absolute;
+  top: 52px;
+  left: 0;
+  width: 180px;
+  background: white;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+  font-size: 13px;
+  z-index: 10;
+  animation: fadeIn 0.2s ease-in-out;
 }
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* === Post Media === */
 .post-media {
-  margin-top: 8px;
+  margin-top: 12px;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background-color: #e2e8f0;
+  border-radius: 10px;
+  overflow: hidden;
 }
+
 .media-item {
   width: 100%;
-  max-height: 400px;
-  border-radius: 10px;
+  height: 100%;
   object-fit: cover;
-  background-color: #e2e8f0;
+  display: block;
+  border-radius: 10px;
 }
 
-/* Sidebar Menu */
-.sidebar-links {
-  list-style: none;
-}
-.sidebar-links li {
-  margin: 8px 0;
-}
-.sidebar-links a {
-  text-decoration: none;
-  color: #2b6cb0;
-  font-weight: 500;
+/* === Post Actions === */
+.post-actions {
+  display: flex;
+  gap: 16px;
+  margin-top: 12px;
 }
 
-/* Donate Button */
-.btn-donate {
-  margin-top: 10px;
-  background-color: #48bb78;
-  color: white;
+.like-button,
+.share-button {
+  background: none;
   border: none;
-  padding: 10px 16px;
-  border-radius: 6px;
+  color: #555;
+  font-size: 14px;
   cursor: pointer;
-  font-weight: 600;
-  transition: background-color 0.3s ease;
-}
-.btn-donate:hover {
-  background-color: #38a169;
+  transition: color 0.2s ease;
+  padding: 4px 8px;
+  border-radius: 4px;
 }
 
-/* No Posts */
-.no-posts {
-  text-align: center;
-  color: #777;
-  margin-top: 40px;
+.like-button:hover,
+.share-button:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.liked {
+  color: #e0245e;
+}
+
+/* === Typography and Utility === */
+.text-sm {
+  font-size: 14px;
+}
+
+.text-xs {
+  font-size: 12px;
+}
+
+.font-semibold {
+  font-weight: 600;
+}
+
+.text-gray-800 {
+  color: #2d3748;
+}
+
+.text-gray-500 {
+  color: #a0aec0;
+}
+
+.mt-1 {
+  margin-top: 10px;
+}
+
+.mt-3 {
+  margin-top: 16px;
+}
+
+/* === Responsive Handling === */
+@media (max-width: 1024px) {
+  .feed-container {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .sidebar-left,
+  .sidebar-right {
+    width: 100%;
+    position: static;
+  }
 }
