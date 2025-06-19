@@ -51,3 +51,4 @@ const AnimatedMenuItem = ({ label, link, animationKey }) => (
 );
 
 export default AnimatedMenuItem;
+

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import dayjs from 'dayjs';
@@ -8,110 +8,73 @@ import AnimatedMenuItem from '../components/AnimatedMenuItem';
 
 dayjs.extend(relativeTime);
 
-const PostCard = ({ post, index, onCommentChange, onCommentSubmit }) => {
-  const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.3 });
-  const direction = index % 2 === 0 ? -150 : 150;
+const PostCard = ({ post, index }) => {
+  const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.2 });
+  const direction = index % 2 === 0 ? -50 : 50;
 
-  const media = post.media || (post.image ? { type: 'image', src: post.image } : null);
+  const media = (() => {
+    if (post.media) {
+      if (typeof post.media === 'string') {
+        const isVideo = post.mediaType === 'video' || post.media.includes('video');
+        return { type: isVideo ? 'video' : 'image', src: post.media };
+      } else if (typeof post.media === 'object' && post.media.src) {
+        return post.media;
+      }
+    } else if (post.image) {
+      return { type: 'image', src: post.image };
+    } else if (post.video) {
+      return { type: 'video', src: post.video };
+    }
+    return null;
+  })();
 
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, x: direction, rotate: direction / 6 }}
-      animate={inView ? { opacity: 1, x: 0, rotate: 0 } : {}}
-      transition={{ type: 'spring', stiffness: 120, damping: 18 }}
+      initial={{ opacity: 0, x: direction }}
+      animate={inView ? { opacity: 1, x: 0 } : {}}
+      transition={{ type: 'tween', duration: 0.5 }}
       className="post-card"
     >
-      <div className="flex items-start">
-        <div className="w-12 h-12 mr-3">
+      <div className="post-header">
+        <div className="avatar-holder">
           <img
             src="/images/admin-avatar.png"
             alt="Admin Avatar"
-            className="rounded-full object-cover w-full h-full"
+            className="avatar-img"
             onError={(e) => {
               e.target.onerror = null;
               e.target.src = "/images/default-avatar.png";
             }}
           />
         </div>
-        <div className="flex-grow">
-          <div className="flex items-center justify-between">
-            <h4 className="font-semibold text-sm text-gray-800">Admin</h4>
-            <span className="text-xs text-gray-500">
-              {post.timestamp ? dayjs(post.timestamp).fromNow() : 'Just now'}
-            </span>
+        <div className="post-meta">
+          <div className="author">Admin</div>
+          <div className="timestamp">
+            {post.timestamp ? dayjs(post.timestamp).fromNow() : 'Just now'}
           </div>
-          <p className="text-gray-800 text-sm mt-1">{post.content}</p>
-
-          {media && (
-            <div className="post-media mt-3">
-              {media.type === 'image' ? (
-                <img
-                  src={media.src}
-                  alt="Post Content"
-                  className="media-item rounded-md"
-                  onError={(e) => {
-                    e.target.onerror = null;
-                    e.target.src = "/images/default.jpg";
-                  }}
-                />
-              ) : media.type === 'video' ? (
-                <video controls className="media-item rounded-md">
-                  <source src={media.src} type="video/mp4" />
-                  Your browser does not support the video tag.
-                </video>
-              ) : null}
-            </div>
-          )}
-
-          {post.isCommenting && (
-            <div className="comment-section mt-3">
-              <textarea
-                placeholder="Write a comment..."
-                value={post.comment}
-                className="comment-textarea"
-                rows={3}
-                onChange={(e) => onCommentChange(post.id, e.target.value)}
-              />
-              <button
-                onClick={() => onCommentSubmit(post)}
-                className="comment-button"
-              >
-                Post
-              </button>
-            </div>
-          )}
         </div>
       </div>
+
+      {post.content && <p className="post-text">{post.content}</p>}
+
+      {media && (
+        <div className="post-media">
+          {media.type === 'image' ? (
+            <img src={media.src} alt="Post Media" className="media-item" />
+          ) : media.type === 'video' ? (
+            <video controls className="media-item">
+              <source src={media.src} type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+          ) : null}
+        </div>
+      )}
     </motion.div>
   );
 };
 
 const Feed = ({ posts }) => {
-  const [comments, setComments] = useState({});
-  const [currentPost, setCurrentPost] = useState(null);
-  const [showCommentBox, setShowCommentBox] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setShowCommentBox(window.scrollY < 100);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const handleCommentChange = (postId, comment) => {
-    setComments({
-      ...comments,
-      [postId]: { ...comments[postId], comment },
-    });
-  };
-
-  const handleCommentSubmit = (post) => {
-    console.log("Comment submitted for post: ", post.id);
-    // Add real submission logic here
-  };
-
   return (
     <div className="feed-container">
       <aside className="sidebar-left">
@@ -128,38 +91,13 @@ const Feed = ({ posts }) => {
       </aside>
 
       <main className="feed-main">
-        <div className="feed-header">
-          {showCommentBox && !currentPost ? (
-            <div className="new-comment-box mb-4">
-              <textarea
-                placeholder="Write your comment here..."
-                className="comment-textarea"
-                rows={3}
-              />
-              <button
-                onClick={() => setCurrentPost(posts[0])}
-                className="comment-button"
-              >
-                Post a Comment
-              </button>
-            </div>
-          ) : (
-            <h1 className="feed-title">SombezaPwani</h1>
-          )}
-        </div>
-
+        <h1 className="feed-title">SombezaPwani</h1>
         <div className="posts-container">
           {posts.length === 0 ? (
             <p className="no-posts">No posts yet.</p>
           ) : (
             posts.map((post, idx) => (
-              <PostCard
-                key={post.id || idx}
-                post={{ ...post, comment: comments[post.id]?.comment || '' }}
-                index={idx}
-                onCommentChange={handleCommentChange}
-                onCommentSubmit={handleCommentSubmit}
-              />
+              <PostCard key={post.id || idx} post={post} index={idx} />
             ))
           )}
         </div>

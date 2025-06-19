@@ -18,35 +18,33 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-size: 50% 100%; /* Adjusting to display two images side by side */
+  background-size: 50% 100%;
+  background-repeat: no-repeat;
   background-position: left center, right center;
   opacity: 0;
   animation: imageTransition 20s infinite;
+  transition: opacity 1s ease-in-out;
 }
 
-/* Keyframes to animate the image */
 @keyframes imageTransition {
   0% {
-    opacity: 1;
-    transform: scale(1.2) translateY(0);
-  }
-  25% {
     opacity: 0;
-    transform: scale(1) translateY(-100%);
+    transform: scale(1);
   }
-  50% {
-    opacity: 0;
-    transform: scale(1) translateY(0);
-  }
-  75% {
+  10% {
     opacity: 1;
-    transform: scale(1.2) translateY(0);
+    transform: scale(1.05);
+  }
+  90% {
+    opacity: 1;
+    transform: scale(1.05);
   }
   100% {
     opacity: 0;
-    transform: scale(1.2) translateY(100%);
+    transform: scale(1);
   }
 }
+
 
 /* Dynamic delay for images */
 .explore-image:nth-child(odd) {
