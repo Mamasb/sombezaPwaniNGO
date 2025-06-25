@@ -5,38 +5,37 @@ import { motion } from 'framer-motion';
 const animations = {
   explore: {
     whileHover: {
-      rotate: 360,
-      transition: { duration: 0.5, ease: 'easeInOut' },
+      backgroundColor: '#f1f5f9', // subtle gray on hover
+      scale: 1.03,
+      transition: { duration: 0.2, ease: 'easeOut' },
     },
   },
   learn: {
     whileHover: {
-      scale: 1.2,
-      borderRadius: "50%",
-      backgroundColor: "#facc15", // yellow highlight
-      transition: { duration: 0.3 },
+      backgroundColor: '#fef3c7', // soft yellow
+      scale: 1.03,
+      transition: { duration: 0.2 },
     },
   },
   donate: {
     whileHover: {
-      x: 10,
-      scale: 1.1,
-      transition: { type: "spring", stiffness: 300 },
+      backgroundColor: '#fee2e2', // light red
+      scale: 1.03,
+      transition: { duration: 0.2 },
     },
   },
   messages: {
     whileHover: {
-      rotate: -10,
-      backgroundColor: "#34d399", // green
-      transition: { type: "spring", stiffness: 250 },
+      backgroundColor: '#d1fae5', // mint green
+      scale: 1.03,
+      transition: { duration: 0.2 },
     },
   },
   careers: {
     whileHover: {
-      scale: 1.05,
-      color: "#e11d48", // rose
-      textShadow: "0px 0px 8px rgba(255, 0, 0, 0.8)",
-      transition: { duration: 0.3 },
+      backgroundColor: '#fce7f3', // soft rose
+      scale: 1.03,
+      transition: { duration: 0.2 },
     },
   },
 };
@@ -44,11 +43,12 @@ const animations = {
 const AnimatedMenuItem = ({ label, link, animationKey }) => (
   <motion.li
     className="menu-item"
-    {...animations[animationKey]}
+    {...(animations[animationKey] || {})}
   >
-    {link ? <a href={link}>{label}</a> : label}
+    <a href={link || '#'} className="animated-link">
+      {label}
+    </a>
   </motion.li>
 );
 
 export default AnimatedMenuItem;
-

@@ -8,16 +8,15 @@
 html, body {
   width: 100%;
   min-height: 100vh;
-  overflow-x: hidden;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background-color: #f0f2f5;
+  overflow-x: hidden;
 }
 
 /* === Feed Layout === */
 .feed-container {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
   gap: 20px;
   max-width: 1200px;
   margin: 30px auto;
@@ -25,7 +24,7 @@ html, body {
   width: 100%;
 }
 
-/* === Sidebar Styling (Twitter-like) === */
+/* === Sidebar Styling === */
 .sidebar-left,
 .sidebar-right {
   width: 260px;
@@ -37,46 +36,21 @@ html, body {
   display: flex;
   flex-direction: column;
   gap: 24px;
-  max-height: fit-content;
   position: sticky;
   top: 20px;
+  max-height: fit-content;
 }
 
 .sidebar-title {
   font-size: 16px;
   font-weight: 600;
-  color: #14171a;
-  margin-bottom: 8px;
-}
-
-.sidebar-links {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.sidebar-links li {
-  margin-bottom: 14px;
-}
-
-.sidebar-links a {
-  display: block;
-  text-decoration: none;
-  color: #1d9bf0;
-  font-weight: 500;
-  padding: 6px 10px;
-  border-radius: 8px;
-  transition: background 0.2s ease;
-}
-
-.sidebar-links a:hover {
-  background-color: rgba(29, 155, 240, 0.1);
+  color: #1f2937;
+  margin-bottom: 10px;
 }
 
 .sidebar-content p {
   font-size: 14px;
   color: #555;
-  margin-top: 4px;
   line-height: 1.4;
 }
 
@@ -98,7 +72,30 @@ html, body {
   background-color: #0d8ae3;
 }
 
-/* === Feed Main === */
+.sidebar-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.menu-item {
+  margin-bottom: 12px;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: all 0.2s ease-in-out;
+}
+
+.animated-link {
+  display: block;
+  padding: 10px 14px;
+  text-decoration: none;
+  color: #1f2937;
+  font-weight: 500;
+  border-radius: 8px;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+/* === Feed Main and Post Cards === */
 .feed-main {
   flex: 1;
   background: #ffffff;
@@ -120,157 +117,35 @@ html, body {
   font-size: 16px;
 }
 
-/* === Post Card === */
 .post-card {
   background: #f9f9f9;
   border-radius: 12px;
   padding: 16px;
   margin-bottom: 20px;
-  transition: all 0.2s ease;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease;
   overflow: hidden;
 }
 
-/* === Flex Utility === */
-.flex {
-  display: flex;
-  align-items: flex-start;
-}
-
-.flex-grow {
-  flex: 1;
-}
-
-/* === Avatar + HoverCard === */
-.avatar-holder {
-  position: relative;
-  width: 48px;
-  height: 48px;
-  margin-right: 15px;
-  border-radius: 50%;
-  overflow: hidden;
-  flex-shrink: 0;
-  background-color: #e2e8f0;
-}
-
-.avatar-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 50%;
-  display: block;
-}
-
-.hovercard {
-  position: absolute;
-  top: 52px;
-  left: 0;
-  width: 180px;
-  background: white;
-  padding: 10px;
-  border-radius: 8px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
-  font-size: 13px;
-  z-index: 10;
-  animation: fadeIn 0.2s ease-in-out;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(5px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* === Post Media === */
+/* === Responsive Images and Media in Posts === */
 .post-media {
   margin-top: 12px;
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  background-color: #e2e8f0;
-  border-radius: 10px;
-  overflow: hidden;
+  display: flex;
+  justify-content: center;
 }
 
 .media-item {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  max-width: 100%;
+  max-height: 400px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 8px;
   display: block;
-  border-radius: 10px;
 }
 
-/* === Post Actions === */
-.post-actions {
-  display: flex;
-  gap: 16px;
-  margin-top: 12px;
-}
-
-.like-button,
-.share-button {
-  background: none;
-  border: none;
-  color: #555;
-  font-size: 14px;
-  cursor: pointer;
-  transition: color 0.2s ease;
-  padding: 4px 8px;
-  border-radius: 4px;
-}
-
-.like-button:hover,
-.share-button:hover {
-  background-color: rgba(0, 0, 0, 0.05);
-}
-
-.liked {
-  color: #e0245e;
-}
-
-/* === Typography and Utility === */
-.text-sm {
-  font-size: 14px;
-}
-
-.text-xs {
-  font-size: 12px;
-}
-
-.font-semibold {
-  font-weight: 600;
-}
-
-.text-gray-800 {
-  color: #2d3748;
-}
-
-.text-gray-500 {
-  color: #a0aec0;
-}
-
-.mt-1 {
-  margin-top: 10px;
-}
-
-.mt-3 {
-  margin-top: 16px;
-}
-
-/* === Responsive Handling === */
-@media (max-width: 1024px) {
-  .feed-container {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .sidebar-left,
-  .sidebar-right {
-    width: 100%;
-    position: static;
+@media screen and (min-height: 900px) {
+  .media-item {
+    max-height: 500px;
   }
 }
