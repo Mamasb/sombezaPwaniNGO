@@ -151,7 +151,7 @@ const Feed: React.FC<FeedProps> = ({ posts }) => {
 
       <main className="feed-main">
         <div className="feed-header">
-          <h1 className="feed-title">SombezaPwani</h1>
+          <h1 className="feed-title">ITEPADS</h1>
         </div>
 
         <div className="posts-container">

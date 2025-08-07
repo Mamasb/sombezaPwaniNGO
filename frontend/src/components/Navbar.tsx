@@ -11,7 +11,7 @@ const NavBar = () => {
           to="/"
           className="logo text-2xl font-semibold text-gray-900 tracking-wider hover:text-blue-600 transition duration-300"
         >
-          SombezaPwani
+         ITEPADS
         </Link>
 
         {/* Navigation Links */}
