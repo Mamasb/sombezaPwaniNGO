@@ -1,21 +1,43 @@
+// src/components/Feed.tsx
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import '../styles/styles.css';
-import AnimatedMenuItem from '../components/AnimatedMenuItem';
+import AnimatedMenuItem from './AnimatedMenuItem';
 
 dayjs.extend(relativeTime);
 
-const PostCard = ({ post, index }) => {
+// Type definitions
+interface Media {
+  type: 'image' | 'video';
+  src: string;
+}
+
+interface Post {
+  id?: string | number;
+  content?: string;
+  media?: Media | string;
+  mediaType?: string; // for legacy support
+  image?: string;
+  video?: string;
+  timestamp?: string;
+}
+
+interface PostCardProps {
+  post: Post;
+  index: number;
+}
+
+const PostCard: React.FC<PostCardProps> = ({ post, index }) => {
   const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.3 });
   const direction = index % 2 === 0 ? -100 : 100;
 
   const [liked, setLiked] = useState(false);
   const [hoveringAvatar, setHoveringAvatar] = useState(false);
 
-  const media = (() => {
+  const media: Media | null = (() => {
     if (post.media) {
       if (typeof post.media === 'string') {
         const isVideo = post.mediaType === 'video' || post.media.includes('video');
@@ -51,8 +73,8 @@ const PostCard = ({ post, index }) => {
             alt="Admin Avatar"
             className="avatar-img"
             onError={(e) => {
-              e.target.onerror = null;
-              e.target.src = "/images/default-avatar.png";
+              (e.target as HTMLImageElement).onerror = null;
+              (e.target as HTMLImageElement).src = "/images/default-avatar.png";
             }}
           />
           {hoveringAvatar && (
@@ -107,7 +129,11 @@ const PostCard = ({ post, index }) => {
   );
 };
 
-const Feed = ({ posts }) => {
+interface FeedProps {
+  posts: Post[];
+}
+
+const Feed: React.FC<FeedProps> = ({ posts }) => {
   return (
     <div className="feed-container">
       <aside className="sidebar-left">
