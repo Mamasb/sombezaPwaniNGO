@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import '../styles/navbar.css';
 
-const NavBar = () => {
+const NavBar: React.FC = () => {
   return (
     <nav className="navbar">
       <div className="container flex justify-between items-center">
@@ -11,7 +11,7 @@ const NavBar = () => {
           to="/"
           className="logo text-2xl font-semibold text-gray-900 tracking-wider hover:text-blue-600 transition duration-300"
         >
-         ITEPADS
+          ITEPADS
         </Link>
 
         {/* Navigation Links */}

@@ -1,27 +1,28 @@
-// src/context/UserContext.jsx
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
-const UserContext = createContext();
+type User = {
+  name: string;
+  role: string;
+} | null;
+
+const UserContext = createContext<{ user: User; setUser: React.Dispatch<React.SetStateAction<User>> } | undefined>(undefined);
+
+export const UserProvider = ({ children }: { children: ReactNode }) => {
+  const [user, setUser] = useState<User>(null);
+
+  useEffect(() => {
+    setUser({ name: "Admin User", role: "admin" }); // just for example
+  }, []);
+
+  return (
+    <UserContext.Provider value={{ user, setUser }}>
+      {children}
+    </UserContext.Provider>
+  );
+};
 
 export const useUser = () => {
   const context = useContext(UserContext);
   if (!context) throw new Error("useUser must be used within a UserProvider");
   return context;
-};
-
-export const UserProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
-
-  useEffect(() => {
-    // Simulate user fetch (replace with your logic)
-    // For testing, we set the user as admin:
-    setUser({ name: "Admin User", role: "admin" });
-    // Or as a normal user: { role: "user" }
-  }, []);
-
-  return (
-    <UserContext.Provider value={{ user }}>
-      {children}
-    </UserContext.Provider>
-  );
 };

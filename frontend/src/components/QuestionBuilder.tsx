@@ -173,7 +173,11 @@ const QuestionBuilder: React.FC<Props> = ({ onCreatePost }) => {
             media: row.media || '',
             mediaType: row.mediaType === 'video' ? 'video' : 'image'
           }));
-          setQuestions(parsed);
+          setQuestions(parsed.map((q: any) => ({
+  ...q,
+  mediaType: ['video', 'image'].includes(q.mediaType) ? q.mediaType : undefined
+})));
+
         } catch {
           alert('Invalid CSV format.');
         }

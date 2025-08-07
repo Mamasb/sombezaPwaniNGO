@@ -1,13 +1,17 @@
-import React, { useState } from 'react';
+import { useState, ChangeEvent, FormEvent } from 'react';
 
-const AdminPanel = ({ onCreatePost }) => {
+type AdminPanelProps = {
+  onCreatePost: (content: string, image: File | null) => Promise<void>;
+};
+
+const AdminPanel = ({ onCreatePost }: AdminPanelProps) => {
   const [content, setContent] = useState('');
-  const [image, setImage] = useState(null);
+  const [image, setImage] = useState<File | null>(null);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
+  const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
     if (file && file.type.startsWith('image/')) {
       setImage(file);
     } else {
@@ -15,8 +19,7 @@ const AdminPanel = ({ onCreatePost }) => {
     }
   };
 
-
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (content.trim() === '') {
@@ -24,17 +27,17 @@ const AdminPanel = ({ onCreatePost }) => {
       return;
     }
 
-    setError(''); // Clear error message
-    setLoading(true); // Set loading state
+    setError('');
+    setLoading(true);
 
     try {
-      await onCreatePost(content, image); // Send content and image to the parent
-      setContent(''); // Clear the input after posting
-      setImage(null); // Clear the image after posting
+      await onCreatePost(content, image);
+      setContent('');
+      setImage(null);
     } catch (err) {
       setError('Error creating post. Please try again.');
     } finally {
-      setLoading(false); // Reset loading state
+      setLoading(false);
     }
   };
 
@@ -45,12 +48,12 @@ const AdminPanel = ({ onCreatePost }) => {
       <form onSubmit={handleSubmit} className="space-y-4">
         <textarea
           className="w-full p-2 border rounded-md"
-          rows="4"
+          rows={4}
           value={content}
           onChange={(e) => setContent(e.target.value)}
           placeholder="Write your post here..."
         />
-        {error && <p className="text-red-500 text-sm">{error}</p>} {/* Error message */}
+        {error && <p className="text-red-500 text-sm">{error}</p>}
 
         <div>
           <label className="block mb-2">Upload Image</label>
@@ -75,7 +78,7 @@ const AdminPanel = ({ onCreatePost }) => {
         <button
           type="submit"
           className="px-4 py-2 bg-blue-500 text-white rounded-md"
-          disabled={loading} // Disable button while loading
+          disabled={loading}
         >
           {loading ? 'Creating Post...' : 'Create Post'}
         </button>

@@ -1,22 +1,24 @@
-// src/components/PrivateRoute.jsx
-import React from 'react';
-import { useUser } from '../context/UserContext';
+import { ReactNode } from 'react';
 import { Navigate } from 'react-router-dom';
+import { useUser } from '../context/UserContext';
 
-function PrivateRoute({ children, allowedRoles }) {
+interface PrivateRouteProps {
+  children: ReactNode;
+  allowedRoles: string[];
+}
+
+function PrivateRoute({ children, allowedRoles }: PrivateRouteProps) {
   const { user } = useUser();
 
   if (!user) {
-    // Redirect to login if not authenticated
     return <Navigate to="/" />;
   }
 
   if (!allowedRoles.includes(user.role)) {
-    // Redirect to feed if user doesn't have the required role
     return <Navigate to="/feed" />;
   }
 
-  return children;
+  return <>{children}</>;
 }
 
 export default PrivateRoute;

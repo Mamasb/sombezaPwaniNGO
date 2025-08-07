@@ -5,7 +5,8 @@ import { useInView } from 'react-intersection-observer';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import '../styles/styles.css';
-import AnimatedMenuItem from './AnimatedMenuItem';
+import AnimatedMenuItem from '../components/AnimatedMenuItem';
+
 
 dayjs.extend(relativeTime);
 
