@@ -22,6 +22,7 @@ html, body {
   margin: 30px auto;
   padding: 0 16px;
   width: 100%;
+  flex-wrap: wrap;
 }
 
 /* === Sidebar Styling === */
@@ -147,5 +148,60 @@ html, body {
 @media screen and (min-height: 900px) {
   .media-item {
     max-height: 500px;
+  }
+}
+
+/* === Mobile Responsive === */
+@media (max-width: 768px) {
+  .feed-container {
+    flex-direction: column;
+    gap: 16px;
+    padding: 0 12px;
+  }
+
+  .sidebar-left,
+  .sidebar-right {
+    width: 100%;
+    position: relative;
+    top: auto;
+    max-height: none;
+  }
+
+  .feed-main {
+    width: 100%;
+    padding: 16px;
+  }
+
+  .feed-title {
+    font-size: 20px;
+    text-align: center;
+  }
+
+  .post-card {
+    padding: 14px;
+  }
+
+  .media-item {
+    max-height: 300px;
+  }
+}
+
+@media (max-width: 480px) {
+  .feed-title {
+    font-size: 18px;
+  }
+
+  .sidebar-title {
+    font-size: 14px;
+  }
+
+  .sidebar-content p,
+  .animated-link {
+    font-size: 13px;
+  }
+
+  .btn-donate {
+    font-size: 14px;
+    padding: 8px 0;
   }
 }

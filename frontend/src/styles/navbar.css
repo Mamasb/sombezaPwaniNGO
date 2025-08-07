@@ -3,8 +3,8 @@
 /* Navbar Styles */
 .navbar {
   background-color: white;
-  color: #1f2937; /* Gray 900 */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Light shadow for depth */
+  color: #1f2937;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   position: sticky;
   top: 0;
   z-index: 50;
@@ -25,38 +25,68 @@
 
 /* Logo/Brand Name Styles */
 .navbar .logo {
-  font-size: 1.875rem; /* 2xl */
-  font-weight: 600; /* Semi-bold */
-  color: #1f2937; /* Dark gray */
-  text-transform: uppercase; /* Clean, modern look */
-  letter-spacing: 1px; /* Slightly wider letters for a sleek feel */
+  font-size: 1.875rem;
+  font-weight: 600;
+  color: #1f2937;
+  text-transform: uppercase;
+  letter-spacing: 1px;
   transition: color 0.3s ease;
 }
 
 .navbar .logo:hover {
-  color: #2563eb; /* Blue when hovered */
+  color: #2563eb;
 }
 
 /* Navigation Links Styles */
 .navbar .nav-links {
   display: flex;
-  gap: 32px; /* Space between links */
-  font-size: 1.125rem; /* Large text */
-  font-weight: 500; /* Medium font weight */
+  gap: 32px;
+  font-size: 1.125rem;
+  font-weight: 500;
 }
 
-/* Navigation Link Styles */
 .navbar .nav-links a {
-  color: #4b5563; /* Gray 700 */
+  color: #4b5563;
   transition: color 0.3s ease, transform 0.3s ease;
 }
 
 .navbar .nav-links a:hover {
-  color: #2563eb; /* Blue when hovered */
-  transform: translateY(-2px); /* Subtle lift effect */
+  color: #2563eb;
+  transform: translateY(-2px);
 }
 
-/* Additional Hover Effects */
 .navbar .nav-links a:active {
-  transform: translateY(0px); /* Return to normal position when clicked */
+  transform: translateY(0px);
+}
+
+/* === Mobile Responsive === */
+@media (max-width: 768px) {
+  .navbar .container {
+    flex-direction: column;
+    align-items: flex-start;
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
+
+  .navbar .nav-links {
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  .navbar .nav-links a {
+    font-size: 1rem;
+    padding: 6px 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar .logo {
+    font-size: 1.5rem;
+  }
+
+  .navbar .nav-links {
+    gap: 12px;
+  }
 }
