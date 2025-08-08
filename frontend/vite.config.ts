@@ -1,9 +1,13 @@
-// vite.config.js
-export default {
-  // ... other Vite config
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+
+export default defineConfig({
+  plugins: [react()],
   server: {
-    allowedHosts: ['fdea6aa3bc7a.ngrok-free.app'], // Replace with your current ngrok host
     host: true,
-    port: 5173
+    allowedHosts: [
+      '.ngrok-free.app', // matches any ngrok-free.app subdomain
+      '.ngrok.io',       // matches old-style ngrok links
+    ]
   }
-};
+})
