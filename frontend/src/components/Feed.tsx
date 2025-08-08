@@ -140,12 +140,12 @@ const Feed: React.FC<FeedProps> = ({ posts }) => {
     <div className="feed-container">
       <aside className="sidebar-left">
         <div className="sidebar-content">
-          <h2 className="sidebar-title">Menu</h2>
+          <h2 className="sidebar-title"></h2>
           <ul className="sidebar-links">
             <AnimatedMenuItem label="Explore" link="/explore" animationKey="explore" />
-            <AnimatedMenuItem label="Learning & Impact" animationKey="learn" />
-            <AnimatedMenuItem label="Donations and Partnerships" animationKey="donate" />
-            <AnimatedMenuItem label="Messages" animationKey="messages" />
+            <AnimatedMenuItem label="Learning & Impact" link="/learn" animationKey="learn" />
+            <AnimatedMenuItem label="Donations and Partnerships" link="donate" animationKey="donate" />
+            <AnimatedMenuItem label="Messages"link="Messages" animationKey="messages" />
             <AnimatedMenuItem label="Careers And Opportunities" animationKey="careers" />
           </ul>
         </div>

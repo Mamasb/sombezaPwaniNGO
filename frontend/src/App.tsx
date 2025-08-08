@@ -4,6 +4,9 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import NavBar from './components/Navbar';
 import Feed from './components/Feed';
 import Explore from './pages/Explore';
+import Learn from './pages/Learn';
+import Donate from './pages/Donate';
+import Messages from './pages/Messages';
 import AdminPanel from './pages/AdminPanel';
 
 interface Post {
@@ -28,6 +31,9 @@ const App: React.FC = () => {
       <Routes>
         <Route path="/" element={<Feed posts={posts} />} />
         <Route path="/explore" element={<Explore />} />
+		<Route path="/learn" element={<Learn />} /> {/* Added this */}
+		<Route path="/donate" element={<Donate />} /> 
+		<Route path="/messages" element={<Messages />} /> 
         <Route path="/admin" element={<AdminPanel onCreatePost={handleCreatePost} posts={posts} />} />
       </Routes>
     </Router>

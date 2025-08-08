@@ -1,0 +1,205 @@
+.mainContainer {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #023e8a;
+  background-color: #f9fbfd;
+}
+
+h1, h2, h3 {
+  font-weight: 700;
+  color: #0077b6;
+}
+
+h1 {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  border-bottom: 3px solid #00b4d8;
+  padding-bottom: 0.25rem;
+}
+
+h3 {
+  font-size: 1.4rem;
+  margin: 0.5rem 0;
+}
+
+p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-top: 0;
+}
+
+.section {
+  margin-top: 3rem;
+}
+
+/* Impact Stats */
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.statCard {
+  padding: 1.25rem;
+  background: #d0f0fd;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 119, 182, 0.15);
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.statCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 12px rgba(0, 119, 182, 0.3);
+}
+
+.statValue {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 0.3rem;
+  color: #023e8a;
+}
+
+.statLabel {
+  margin: 0;
+}
+
+/* Timeline */
+.timelineList {
+  list-style: none;
+  padding: 0;
+  margin-top: 1rem;
+}
+
+.timelineItem {
+  margin-bottom: 1.75rem;
+  border-left: 4px solid #0077b6;
+  padding-left: 1.2rem;
+  position: relative;
+}
+
+.timelineIcon {
+  position: absolute;
+  left: -34px;
+  top: 0;
+  background-color: #0077b6;
+  color: white;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+}
+
+.timelineDate {
+  font-weight: 600;
+  color: #023e8a;
+  display: block;
+}
+
+.timelineDescription {
+  margin-top: 0.25rem;
+}
+
+/* Featured Stories */
+.featuredStories {
+  margin-top: 1rem;
+}
+
+.storyArticle {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+  flex-wrap: wrap;
+  align-items: center;
+  background: white;
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 6px 10px rgba(0, 119, 182, 0.1);
+  transition: box-shadow 0.3s ease;
+}
+
+.storyArticle:hover {
+  box-shadow: 0 10px 20px rgba(0, 119, 182, 0.2);
+}
+
+.storyImage {
+  width: 300px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 10px;
+  flex-shrink: 0;
+}
+
+.storyContent {
+  flex: 1 1 300px;
+}
+
+.storyQuote {
+  font-style: italic;
+  background: #e0f7fa;
+  padding: 0.75rem 1rem;
+  border-left: 5px solid #0077b6;
+  margin: 1rem 0 0 0;
+  color: #0077b6;
+}
+
+/* Call to Action */
+.callToAction {
+  margin-top: 4rem;
+  padding: 2rem;
+  background-color: #0077b6;
+  color: white;
+  text-align: center;
+  border-radius: 12px;
+  box-shadow: 0 8px 15px rgba(0, 119, 182, 0.4);
+}
+
+.callToAction h2 {
+  color: white;
+}
+
+.callToAction p {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.donateButton {
+  display: inline-block;
+  margin-top: 1rem;
+  background-color: white;
+  color: #0077b6;
+  padding: 0.85rem 2rem;
+  border-radius: 6px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.donateButton:hover {
+  background-color: #00b4d8;
+  color: white;
+  cursor: pointer;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .storyArticle {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .storyImage {
+    width: 100%;
+    height: auto;
+  }
+}
