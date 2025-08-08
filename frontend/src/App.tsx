@@ -7,7 +7,7 @@ import Explore from './pages/Explore';
 import Learn from './pages/learn';
 import Donate from './pages/donate';
 import Messages from './pages/Messages';
-import Careers from './pages/Careers';
+import Careers from './pages/careers';
 import AdminPanel from './pages/AdminPanel';
 
 interface Post {
