@@ -5,7 +5,7 @@ import NavBar from './components/Navbar';
 import Feed from './components/Feed';
 import Explore from './pages/Explore';
 import Learn from './pages/learn';
-import Donate from './pages/Donate';
+import Donate from './pages/donate';
 import Messages from './pages/Messages';
 import Careers from './pages/Careers';
 import AdminPanel from './pages/AdminPanel';
