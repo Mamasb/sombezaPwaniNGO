@@ -4,9 +4,10 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import NavBar from './components/Navbar';
 import Feed from './components/Feed';
 import Explore from './pages/Explore';
-import Learn from './pages/Learn';
+import Learn from './pages/learn';
 import Donate from './pages/Donate';
 import Messages from './pages/Messages';
+import Careers from './pages/Careers';
 import AdminPanel from './pages/AdminPanel';
 
 interface Post {
@@ -34,6 +35,7 @@ const App: React.FC = () => {
 		<Route path="/learn" element={<Learn />} /> {/* Added this */}
 		<Route path="/donate" element={<Donate />} /> 
 		<Route path="/messages" element={<Messages />} /> 
+		<Route path="/careers" element={<Careers />} /> 
         <Route path="/admin" element={<AdminPanel onCreatePost={handleCreatePost} posts={posts} />} />
       </Routes>
     </Router>
